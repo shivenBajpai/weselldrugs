@@ -4,6 +4,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
+const { router } = require('express')
 mongoose.Promise = global.Promise
 
 // Setting Up Database Connection
@@ -40,21 +41,16 @@ app.use('/static', express.static('public'))
 app.set('views', "./views");
 app.set('view engine', 'ejs');
 
-app.listen(process.env.PORT || 5000, () => {console.log(`Server listening on ${process.env.PORT || 5000}`)})
-
-// Dummy Route
-app.get('/' ,(req, res) => {
-  res.render('home', {time: "snacks time!"})
-})
+// Routes
+app.use('/' ,router);
 
 // Error Handler
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error', {
-    title: 'Error',
-    message: err.message,
-    error: {}
-  });
+  res.render('error');
   console.log("Error Handler- Uncaught Error:" + err.message);
   console.log(err.stack);
 });
+
+// Open Server
+app.listen(process.env.PORT || 5000, () => {console.log(`Server listening on ${process.env.PORT || 5000}`)})
