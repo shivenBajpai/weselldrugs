@@ -4,7 +4,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
-const { router } = require('express')
+const { router } = require('./routers/indexRouter')
 mongoose.Promise = global.Promise
 
 // Setting Up Database Connection
@@ -38,7 +38,6 @@ app.use(cookieParser())
 app.use('/static', express.static('public'))
 
 // Rendering Engine
-app.set('views', "./views");
 app.set('view engine', 'ejs');
 
 // Routes
